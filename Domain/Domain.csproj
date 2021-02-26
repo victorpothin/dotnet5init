@@ -8,4 +8,8 @@
     <PackageReference Include="FluentValidation.AspNetCore" Version="9.5.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Dto\Dto.csproj" />
+  </ItemGroup>
+
 </Project>
