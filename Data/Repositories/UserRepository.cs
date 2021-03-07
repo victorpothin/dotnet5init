@@ -16,27 +16,27 @@ namespace Data.Repositories
         }
 
         public User GetById(int id)
-      {
-	      return userContext.Users.FirstOrDefault(user => user.Id == id);
-      }
+        {
+            return userContext.Users.FirstOrDefault(user => user.Id == id);
+        }
 
-      public void Update(User user)
-      {
-	      userContext.Update(user);
-	      userContext.SaveChanges();
-      }
+        public void Update(User user)
+        {
+            userContext.Update(user);
+            userContext.SaveChanges();
+        }
 
-      public User Create(User user)
-      {
-	      EntityEntry<User> result = userContext.Add(user);
-	      userContext.SaveChanges();
-	      return result.Entity;
-      }
+        public User Create(User user)
+        {
+            EntityEntry<User> result = userContext.Add(user);
+            userContext.SaveChanges();
+            return result.Entity;
+        }
 
-      public void Delete(User user)
-      {
-	      userContext.Remove(user);
-	      userContext.SaveChanges();
-      }   
+        public void Delete(User user)
+        {
+            userContext.Remove(user);
+            userContext.SaveChanges();
+        }   
     }
 }
