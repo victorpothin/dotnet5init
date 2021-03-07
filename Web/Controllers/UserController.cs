@@ -2,6 +2,7 @@ using Domain.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Domain.Models;
 using Dto.Responses;
+using Dto.Requests;
 
 namespace Web.Controllers
 {
@@ -21,6 +22,15 @@ namespace Web.Controllers
             if(id == null)
                 return BadRequest("Id is null");
             return Ok(this._userService.GetById(id.Value));
+        }
+
+        [HttpPut]
+        public ActionResult<Response<User>> Edit([FromBody] UserRequest request)
+        {
+            var response = _userService.Edit(request);
+            if(response.Succeeded)
+                return NoContent();
+            return BadRequest(response.Errors);
         }
     }
 }

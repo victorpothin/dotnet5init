@@ -7,6 +7,7 @@ using System.Linq;
 using System.Collections.Generic;
 using FluentValidation.Results;
 using Domain.Models;
+using Domain.Validators;
 
 namespace Domain.Services
 {
@@ -29,17 +30,20 @@ namespace Domain.Services
             return res;
         }
         
-        // public Response<User> Edit(UserRequest request)
-        // {
-        //     User user = GetById(request.Id);
-        //     if(user == null)
-        //     {
-        //         return new Response<User>(){
-        //             Succeeded = false,
-
-        //         };
-        //     }
-        // }
+        public Response<User> Edit(UserRequest request)
+        {
+            User user = new User
+            {
+                Id = request.Id,
+                Name = request.Name,
+                FamilyName = request.FamilyName,
+                Age = request.Age
+            };
+            var response = Validate(user);
+            if(response.Succeeded)
+                _userRepository.Update(user);
+            return response;          
+        }
 
         // public Response<User> Create(UserRequest request)
         // {
@@ -55,6 +59,19 @@ namespace Domain.Services
         {
             IEnumerable<string> errorsMessages = errors.Select(error => error.ErrorMessage);
             return Join(", ", errorsMessages);
+        }
+
+        private Response<User> Validate(User user)
+        {
+            UserValidator validator = new UserValidator();
+            ValidationResult result = validator.Validate(user);
+            Response<User> response = new Response<User>()
+            {
+                Data = user,
+                Succeeded = result.IsValid,
+                Errors = FormatErrors(result.Errors)
+            };
+            return response;
         }
     }
 }
