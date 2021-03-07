@@ -63,7 +63,7 @@ namespace Domain.Services
 
         private Response<User> Validate(User user)
         {
-            UserValidator validator = new UserValidator();
+            UserValidator validator = new UserValidator(_userRepository);
             ValidationResult result = validator.Validate(user);
             Response<User> response = new Response<User>()
             {
