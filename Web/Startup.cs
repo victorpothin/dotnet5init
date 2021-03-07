@@ -46,9 +46,14 @@ namespace Web
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Web v1"));
             }
-
-            app.UseHttpsRedirection();
-
+            
+            app.UseCors(c =>
+            {
+                c.AllowAnyHeader();
+                c.AllowAnyMethod();
+                c.AllowAnyOrigin();
+            });
+            
             app.UseRouting();
 
             app.UseAuthorization();
